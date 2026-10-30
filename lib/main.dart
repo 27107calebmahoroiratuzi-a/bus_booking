@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'auth_gate.dart';
 import 'weather.dart';
 
 class Seat {
@@ -164,7 +167,11 @@ String changeInNotes(int change) {
   return parts.join(' · ');
 }
 
-void main() {
+
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const BusApp());
 }
 
@@ -177,7 +184,7 @@ class BusApp extends StatelessWidget {
       title: 'Horizon Express',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(colorSchemeSeed: Colors.indigo),
-      home: const SeatMapScreen(),
+      home: const AuthGate(),
     );
   }
 }
@@ -264,6 +271,11 @@ class _SeatMapScreenState extends State<SeatMapScreen> {
             icon: const Icon(Icons.people_outline),
             tooltip: 'Waitlist',
             onPressed: () => openScreen(WaitlistScreen(bus: bus)),
+          ),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Log out',
+            onPressed: () => FirebaseAuth.instance.signOut(),
           ),
         ],
       ),
