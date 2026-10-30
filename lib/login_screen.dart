@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'bus.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
       if (newAccount) {
         await auth.createUserWithEmailAndPassword(
             email: _email.text.trim(), password: _password.text);
+        await addSampleBookings();
       } else {
         await auth.signInWithEmailAndPassword(
             email: _email.text.trim(), password: _password.text);
@@ -56,6 +58,13 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
+  void dispose() {
+    _email.dispose();
+    _password.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -67,14 +76,17 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const Icon(Icons.directions_bus, size: 64, color: Colors.indigo),
                 const Text('Horizon Express',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+                const Text('Nyabugogo → Huye', textAlign: TextAlign.center),
                 const SizedBox(height: 32),
                 TextFormField(
                   controller: _email,
                   keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(
+                      labelText: 'Email', border: OutlineInputBorder()),
                   validator: (v) {
                     final email = (v ?? '').trim();
                     if (email.isEmpty) return 'Enter your email';
@@ -88,9 +100,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   controller: _password,
                   obscureText: true,
-                  decoration: const InputDecoration(labelText: 'Password', border: OutlineInputBorder()),
+                  decoration: const InputDecoration(
+                      labelText: 'Password', border: OutlineInputBorder()),
                   validator: (v) =>
-                  (v ?? '').length < 6 ? 'At least 6 characters' : null,
+                      (v ?? '').length < 6 ? 'At least 6 characters' : null,
                 ),
                 const SizedBox(height: 16),
                 if (_error != null)

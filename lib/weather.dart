@@ -31,9 +31,9 @@ class Weather {
 Future<Weather> fetchHuyeWeather() async {
   final url = Uri.parse(
     'https://api.open-meteo.com/v1/forecast'
-        '?latitude=-2.5967&longitude=29.7394'
-        '&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code'
-        '&timezone=Africa%2FKigali',
+    '?latitude=-2.5967&longitude=29.7394'
+    '&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code'
+    '&timezone=Africa%2FKigali',
   );
 
   final response = await http.get(url);
