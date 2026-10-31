@@ -1,18 +1,15 @@
-# horizon booking
-A bus booking app. 
+# (Your mini project name)
 
-My data is now saved on the phone with shared_preferences,
-so nothing is lost when the app closes,
-and it shows weather information from open-meteo weather api 
+One sentence about your app. 
 
-"https://api.open-meteo.com/v1/forecast?latitude=-2.5967&longitude=29.7394&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=Africa%2FKigali". 
+It signs users in with Firebase Authentication, and each user's data is saved in Cloud Firestore under their own id, so two accounts never see each other's data, and every change appears live. 
 
 ## Screenshots 
 
-![Before closing](screenshots/before.png) 
+![Login](screenshots/login.png)
 
-![After running again](screenshots/after.png) 
+![My data in Firestore](screenshots/console.png) 
 
-![Live data from an API](screenshots/api.png) 
+![Live update](screenshots/live.png) 
 
-![No internet](screenshots/no-internet.png)
+![Second account sees nothing of mine](screenshots/denied.png)
