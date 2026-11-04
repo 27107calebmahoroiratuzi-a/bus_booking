@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // The shared bus: every logged-in account can see all the seats.
+    match /buses/{bus}/bookings/{seat} {
+      allow read: if request.auth != null;
+
+      // Booking a free seat: the booking must carry your own account id.
+      allow create: if request.auth != null
+                    && request.resource.data.bookedBy == request.auth.uid;
+
+      // Cancelling a booking (or handing the seat to the next person
+      // waiting): only the account that booked this seat.
+      allow update, delete: if request.auth != null
+                            && resource.data.bookedBy == request.auth.uid;
+    }
+
+    // The shared waitlist: every logged-in account can see it.
+    match /buses/{bus}/waitlist/{person} {
+      allow read: if request.auth != null;
+
+      // Joining: the entry must carry your own account id.
+      allow create: if request.auth != null
+                    && request.resource.data.addedBy == request.auth.uid;
+
+      // Removing someone: any logged-in account, because whoever cancels
+      // a seat moves the first person waiting into it.
+      allow delete: if request.auth != null;
+    }
+  }
+}
