@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^7.0.1
   cloud_firestore: ^7.1.0
   provider: ^6.1.5+1
+  image_picker: ^1.2.4
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +51,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -61,6 +63,14 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+
+flutter_launcher_icons:           # new: starts at the very left
+  adaptive_icon_background: "#F7F1EF"
+  adaptive_icon_foreground: "assets/icon/foreground.png"
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
 
   # To add assets to your application, add an assets section, like this:
   # assets:
